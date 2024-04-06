@@ -15,7 +15,7 @@ export default function Merge(props) {
             <div>
                 {props.firstHalf.map((el) => (
                     <h4>
-                        {el }
+                        {el}
                     </h4>
                 ))}
             </div>
