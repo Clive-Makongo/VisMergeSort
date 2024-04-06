@@ -12,6 +12,21 @@ export default function Merge(props) {
         <div>
             [{props.firstHalf}],
             [{props.secondHalf}]
+            <div>
+                {props.firstHalf.map((el) => (
+                    <h4>
+                        {el}
+                    </h4>
+                ))}
+            </div>
+            <div>
+                {props.secondHalf.map((el) => (
+                    <h4>
+                        {el}
+                    </h4>
+                ))}
+            </div>
+            
 
         </div>
     )
