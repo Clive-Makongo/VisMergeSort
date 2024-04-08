@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import Sort from './Sort';
+import Merge2 from './Merge2';
 import Number from '../Components/Number';
 import Array from '../Components/Array';
 import Container from '../Components/Container';
@@ -165,8 +166,15 @@ export default function Display() {
                 </div>
             </Row>
 
-            {/* Render Sort component only if arrays are loaded */}
+            {/* MERGE 2 */}
             {arraysLoaded && secondHalf.length > 0 && firstHalf.length > 0 &&
+                <Merge2 array={[...array] } />
+            }
+            {/* MERGE 2 */}
+            
+            {/* Render Sort component only if arrays are loaded 
+            MERGE 1*/}
+            {/* {arraysLoaded && secondHalf.length > 0 && firstHalf.length > 0 &&
                 <Row>
                     <Col size="md-6">
                         <Sort
@@ -181,7 +189,7 @@ export default function Display() {
                             wholeArray={[...array]}
                         />
                     </Col>
-                </Row>}
+                </Row>} */}
 
         </div >
     )

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Row from '../Components/Row';
+import Col from '../Components/Column';
 
 export default function Merge(props) {
     const [wholeArray, setWholeArray] = useState([]);
@@ -12,21 +14,23 @@ export default function Merge(props) {
         <div>
             [{props.firstHalf}],
             [{props.secondHalf}]
-            <div>
-                {props.firstHalf.map((el) => (
-                    <h4>
-                        {el }
-                    </h4>
-                ))}
-            </div>
-            <div>
-                {props.secondHalf.map((el) => (
-                    <h4>
-                        {el}
-                    </h4>
-                ))}
-            </div>
-            
+            <Row>
+                <Col size="md-6">
+                    {props.firstHalf.map((el) => (
+                        <h4>
+                            {el}
+                        </h4>
+                    ))}
+                </Col>
+                <Col size="md-6">
+                    {props.secondHalf.map((el) => (
+                        <h4>
+                            {el}
+                        </h4>
+                    ))}
+                </Col>
+            </Row>
+
 
         </div>
     )

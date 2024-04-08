@@ -138,7 +138,8 @@ export default function Sort(props) {
             {arraysLoaded && secondHalf.length <= 2 && firstHalf.length <= 2 &&
                 <Merge
                 firstHalf={[...firstHalf]}
-                secondHalf={[...secondHalf]}/>
+                secondHalf={[...secondHalf]} />
+                
             }
         </div>
     )
