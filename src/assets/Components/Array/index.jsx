@@ -2,21 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Array(props) {
+    const [mounted, setMounted] = useState(false);
+
+
+    useEffect(() => {
+        setTimeout(() => setMounted(true), props.time * 100);
    
+    });
+
 
     return (
-        <div
-            style={{ paddingRight: '15px', backgroundColor: 'white' }}
-            className={props.className}>
-
-            <motion.h4
+        mounted && (
+            <motion.div
                 //  Delay each element's rendering
-                intitial={{ y: -600, opacity: 0 }}
+                intitial={{ y: -600, opacity: 0, }}
                 animate={{ y: -10, opacity: 1 }}
-                transition={{ duration: 1 }}
-            >
-                [{`${props.int}`}],
-            </motion.h4>
-        </div>
+                
+                // St
+                style={{ padding: '15%', backgroundColor: 'gray', borderRadius: '15%', textAlign: 'center', width: '2rem', height: '2rem', margin: '30%'}}
+                className={props.className}>
+
+                <motion.h4>
+                    {`${props.int}`}
+                </motion.h4>
+            </motion.div>)
     )
-}
+};
+

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Display from './assets/Pages/Display'
+import Display2 from './assets/Pages/Restart/Display2'
 import './App.css'
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
 
   return (
     <div>
-      <Display/>
+      <Display2/>
     </div>
   )
 }

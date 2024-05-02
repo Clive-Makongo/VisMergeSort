@@ -51,11 +51,12 @@ export default function Display() {
     //Make array of random elements
     const makeArray = () => {
         const newArray = [];
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 10; i++) {
             newArray.push(Math.floor(Math.random() * 100));
         }
         setArray(newArray);
     };
+
 
     //Code to split arrays
     const splitArrays = () => {
@@ -79,9 +80,9 @@ export default function Display() {
         }
     }
 
-    const render = () => {
-        setInterval(() => {
-            return
+    const render = (act) => {
+        setInterval((act) => {
+        
         }, 1000);
     }
 
@@ -93,7 +94,7 @@ export default function Display() {
                 onClick={makeArray}>
                 Make Array
             </button>
-            <Row style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+            <Row style={{ display: 'flex', justifyContent: 'around' }}>
 
                 {array.map((el, index) => (
                     <Col size="md-1">
@@ -101,6 +102,7 @@ export default function Display() {
                             className={`${index}full`}
                             index={index}
                             int={el}
+                            time={index}
                         />
                     </Col>
                 ))}
@@ -109,7 +111,7 @@ export default function Display() {
             {/* Show full Array */}
 
 
-            <Row>
+            {/* <Row>
                 <div
                     style={{
                         display: 'flex', justifyContent: 'center'
@@ -122,13 +124,13 @@ export default function Display() {
                 </button>
                 </Col>
                 </div>
-            </Row>
+            </Row> */}
 
-            <Row style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {/* <Row style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}> */}
 
                     {/* Show first half */}
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} >
+                    {/* <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} >
                         {firstHalf.length !== 0 ? (
                             firstHalf.map((el, index) => (
                                 <Col
@@ -137,17 +139,18 @@ export default function Display() {
                                         index={index}
                                         className={`${index}firstHalf`}
                                         style={{ padding: '5%' }}
-                                        int={el} />
+                                        int={el}
+                                        time={index}/>
                                 </Col>
                             ))
                         ) : (
                             console.log("Empty Array")
                         )}
-                    </div>
+                    </div> */}
                     {/* Show first half */}
 
                     {/* Show second half */}
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                    {/* <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                         {secondHalf.length !== 0 ? (
                             secondHalf.map((el, index) => (
                                 <Col size="md-2">
@@ -155,21 +158,22 @@ export default function Display() {
                                         className={`${index}secHalf`}
                                         index={index}
                                         style={{ padding: '5%' }}
-                                        int={el} />
+                                        int={el}
+                                        time={index}/>
                                 </Col>
                             ))
                         ) : (
                             console.log("Empty Array")
                         )}
-                    </div>
+                    </div> */}
                     {/* Show second half */}
-                </div>
-            </Row>
+                {/* </div>
+            </Row> */}
 
             {/* MERGE 2 */}
-            {arraysLoaded && secondHalf.length > 0 && firstHalf.length > 0 &&
+            {/* {arraysLoaded && secondHalf.length > 0 && firstHalf.length > 0 &&
                 <Merge2 array={[...array] } />
-            }
+            } */}
             {/* MERGE 2 */}
             
             {/* Render Sort component only if arrays are loaded 

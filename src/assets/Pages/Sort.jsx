@@ -88,7 +88,9 @@ export default function Sort(props) {
                                         <Array
                                             className={'firstHalf ' + index}
                                             style={{ padding: '2%' }}
-                                            int={el} />
+                                            int={el}
+                                            time={index}
+                                        />
                                     </Col>
                                 </motion.div>
                             ))
@@ -105,7 +107,8 @@ export default function Sort(props) {
                                 <Col key={index} size="md-2">
                                     <Array
                                         style={{ padding: '2%' }}
-                                        int={el} />
+                                        int={el}
+                                        time={index}/>
                                 </Col>
                             ))
                         ) : (
@@ -138,7 +141,9 @@ export default function Sort(props) {
             {arraysLoaded && secondHalf.length <= 2 && firstHalf.length <= 2 &&
                 <Merge
                 firstHalf={[...firstHalf]}
-                secondHalf={[...secondHalf]} />
+                secondHalf={[...secondHalf]}
+                wholeArray={[...wholeArray]}
+            />
                 
             }
         </div>
