@@ -37,7 +37,7 @@ export default function Display() {
             opacity: 0
         },
         show: {
-            opacity: 1
+            opacity: 1 
         }
     };
 
