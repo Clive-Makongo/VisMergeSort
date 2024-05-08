@@ -1,31 +1,104 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Col from '../Column';
 
 export default function Array(props) {
+    const [array, setArray] = useState([]);
     const [mounted, setMounted] = useState(false);
+    const [key, setKey] = useState(0);
+    const [size, setSize] = useState(0);
+    
+    useEffect(() => {
+        setMounted(true);
+        setArray(props.array);
+        colSize();
+       
+    });
 
+    const colSize = () => {
+        const x = 12 / array.length;
+        setSize(x);
+        console.log(`size: ${size}`);
+     };
 
     useEffect(() => {
-        setTimeout(() => setMounted(true), props.time * 100);
-   
-    });
+        // Update the key whenever props.array changes to trigger re-render and animation
+        setKey(prevKey => prevKey + 1);
+        console.log(`key: ${key}`)
+    }, [props.array]);
+
+    const map = () => {
+        if (array.length < 2) {
+            return <>
+                {array.map((el, index) => (
+                    <Col size={`md-${size}`} key={index}>
+                        <motion.div
+                            initial={{ y: -600, opacity: 0 }}
+                            animate={{ y: -10, opacity: 1 }}
+                            transition={{ delay: index * 0.05 }}
+                            style={{ backgroundColor: 'gray', borderRadius: '15%', textAlign: 'center', width: '2rem', height: '2rem', margin: '30%' }}
+                            key={key}
+                        >
+                            <motion.h4>
+                                {el}
+                            </motion.h4>
+                        </motion.div>
+                    </Col>
+                ))}
+            </>
+        } else { 
+            sort();
+            return <>
+                {array.map((el, index) => (
+                    <Col size={`md-${size}`} key={index}>
+                        <motion.div
+                            initial={{ y: -600, opacity: 0 }}
+                            animate={{ y: -10, opacity: 1 }}
+                            transition={{ delay: index * 0.05 }}
+                            style={{ backgroundColor: 'gray', borderRadius: '15%', textAlign: 'center', width: '2rem', height: '2rem', margin: '30%' }}
+                            key={key}
+                        >
+                            <motion.h4>
+                                {el}
+                            </motion.h4>
+                        </motion.div>
+                    </Col>
+                ))}
+            </>
+        }
+       
+    };
+
+
+    
+    const sort = () => {
+        if (array.length <= 2) {
+            // Sort elements
+            const arr = [...array]
+        if (arr[0] > arr[1]) {
+            const temp = arr[0];
+            arr[0] = arr[1];
+            arr[1] = temp;
+            setArray(arr)
+        } else {
+            console.log('Array is already sorted');
+        };
+
+        return (
+            <>
+                {map()}
+            </>
+        )
+    }}
 
 
     return (
-        mounted && (
-            <motion.div
-                //  Delay each element's rendering
-                intitial={{ y: -600, opacity: 0, }}
-                animate={{ y: -10, opacity: 1 }}
-                
-                // St
-                style={{ padding: '15%', backgroundColor: 'gray', borderRadius: '15%', textAlign: 'center', width: '2rem', height: '2rem', margin: '30%'}}
-                className={props.className}>
-
-                <motion.h4>
-                    {`${props.int}`}
-                </motion.h4>
-            </motion.div>)
+       array && mounted &&  (
+            <>
+                {map()}
+                {sort()}
+            </>
+        )
     )
 };
 
