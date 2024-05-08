@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Row from '../Components/Row';
 import Col from '../Components/Column';
 import Array from '../Components/Array';
-import Size from '../Components/Size';
+import Size from '../Components/Split';
 
 export default function Merge(props) {
     const [number, setNumber] = useState([]);

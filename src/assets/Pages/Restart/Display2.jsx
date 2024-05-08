@@ -16,6 +16,7 @@ export default function Display() {
     const [firstHalf, setFirstHalf] = useState([]);
     const [secondHalf, setSecondHalf] = useState([]);
     const [arraysLoaded, setArraysLoaded] = useState(false); // State variable to track arrays loaded
+    const [canSplit, setCanSplit] = useState(false);
 
     // Vaariants to delay animation
     const variants = {
@@ -44,15 +45,15 @@ export default function Display() {
 
     // useEffect to set arraysLoaded when first and second halves are loaded
     useEffect(() => {
-        if (firstHalf.length > 0 && secondHalf.length > 0) {
+        if (firstHalf.length > 0 && secondHalf.length > 0 && array.length > 0) {
             setArraysLoaded(true);
         }
-    }, [firstHalf, secondHalf]);
+    }, [firstHalf, secondHalf, array]);
 
     //Make array of random elements
     const makeArray = () => {
         const newArray = [];
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 10; i++) {
             newArray.push(Math.floor(Math.random() * 100));
         }
         setArray(newArray);
@@ -61,30 +62,31 @@ export default function Display() {
 
 
     //Code to split arrays
-    const splitArrays = () => {
-        if (array) {
-            const newArray = [...array]; // Create a copy of the array            
+    // const splitArrays = () => {
+    //     if (array) {
+    //         const newArray = [...array]; // Create a copy of the array            
 
-            // Calculate the index to split the array into two halves
-            const splitIndex = Math.ceil(newArray.length / 2);
+    //         // Calculate the index to split the array into two halves
+    //         const splitIndex = Math.ceil(newArray.length / 2);
 
-            // Use splice to get the first half of the array
-            const temp1 = newArray.splice(0, splitIndex);
+    //         // Use splice to get the first half of the array
+    //         const temp1 = newArray.splice(0, splitIndex);
 
-            // Update the state with the first half of the array
-            setFirstHalf(temp1);
+    //         // Update the state with the first half of the array
+    //         setFirstHalf(temp1);
 
-            // Update the state with the second half of the array (remaining elements in newArray)
-            setSecondHalf(newArray);
+    //         // Update the state with the second half of the array (remaining elements in newArray)
+    //         setSecondHalf(newArray);
 
-            // Update array directly with the modified newArray
-            setArray([...array]);
+    //         // Update array directly with the modified newArray
+    //         setArray([...array]);
 
-        }
-    };
+    //     }
+    // };
 
     // Map array
     const map = () => {
+
         return array.map((el, index) => (
             <Col size="md-1" key={index}>
                 <Array
@@ -92,17 +94,19 @@ export default function Display() {
                     index={index}
                     int={el}
                     time={index}
-           
+
                 />
+                {`${arraysLoaded}`}
             </Col>
         ))
     }
 
     // Pass to Sort
     const sort = () => {
-        
+
         if (array) {
-            return <Sort2 array={[...array] } />
+            return <Sort2 array={[...array]} />
+
         };
     };
 
@@ -115,9 +119,12 @@ export default function Display() {
             </button>
 
             <Row style={{ display: 'flex', justifyContent: 'around' }}>
-
-                {map()}
+                {array.length && (map())}
             </Row>
+
+            {!arraysLoaded && (
+                <button> Split </button>
+            )}
 
             {arraysLoaded && (
                 sort()

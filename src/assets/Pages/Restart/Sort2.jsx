@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Array from '../../Components/Array';
 import Row from '../../Components/Row';
 import Col from '../../Components/Column';
+import Split from '../../Components/Split';
 
 export default function Sort2(props) {
     const [array, setArray] = useState([]);
@@ -11,37 +12,28 @@ export default function Sort2(props) {
 
     const splitArrays = () => {
         if (props.array) {
-            const newArray = [...props.array]; // Create a copy of the array            
+            const newArray = [...props.array];
 
-            // Calculate the index to split the array into two halves
             const splitIndex = Math.ceil(newArray.length / 2);
 
-            // Use splice to get the first half of the array
             const temp1 = newArray.splice(0, splitIndex);
 
-            // Update the state with the first half of the array
             setFirstHalf(temp1);
-
-            // Update the state with the second half of the array (remaining elements in newArray)
             setSecondHalf(newArray);
-
-            // Update array directly with the modified newArray
             setArray([...props.array]);
-
         };
     };
 
-    useState(() => {
+    useEffect(() => {
         splitArrays();
+    }, [props.array]);
 
-        //set loaded
-        setArraysLoaded(true)
-    }, []);
+    useEffect(() => {
+        console.log('Array updated:', array);
+    }, [array]);
 
     const setFirst = () => {
-        if (arraysLoaded) {
-
-            console.log(`firstHalf ${firstHalf}`);
+        if (firstHalf.length) {
             return firstHalf.map((el, index) => (
                 <Col size="md-2" key={index}>
                     <Array
@@ -51,13 +43,12 @@ export default function Sort2(props) {
                         time={index}
                     />
                 </Col>
-            ))
-        }
+            ));
+        };
     };
 
     const setSecond = () => {
-        if (arraysLoaded) {
-            console.log(`firstHalf ${firstHalf}`);
+        if (secondHalf) {
             return secondHalf.map((el, index) => (
                 <Col size="md-2" key={index}>
                     <Array
@@ -66,33 +57,67 @@ export default function Sort2(props) {
                         int={el}
                         time={index}
                     />
-
                 </Col>
             ))
         }
     };
 
-    const sortHalf = (arr) => {
+    const split = (arr) => {
         if (arr) {
-            
-        }
-    }
+            return (
+                <Split array={arr} />
+            );
+        };
+    };
+
+    const cut = (arr) => {
+        const newArray = [...arr];
+
+        const splitIndex = Math.ceil(newArray.length / 2);
+
+        const temp1 = newArray.splice(0, splitIndex);
+
+        return (
+            <>
+                <Col size="md-6">
+                    {split(temp1)}
+                </Col>
+                <Col size="md-6">
+                    {split(newArray)}
+                </Col>
+            </>
+        );
+    };
 
     return (
-        <Row style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'red' }}>
-            <Col size="md-6">
-                <h6>First</h6>
-                <Row style={{ display: 'flex', justifyContent: 'around' }}>
-                    {setFirst()}
-                </Row>
-            </Col>
-
-            <Col size="md-6">
-                <h6>Second</h6>
-                <Row style={{ display: 'flex', justifyContent: 'around' }}>
-                    {/* {setSecond()} */}
-                </Row>
-            </Col>
-        </Row>
+        <div>
+            <Row style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'red' }}>
+                <Col size="md-6">
+                    <div style={{ border: '2px solid black', padding: '10px', margin: '5px' }}>
+                        <h6 style={{ marginBottom: '10%' }}>First Half</h6>
+                        <Row style={{ display: 'flex', justifyContent: 'around' }}>
+                            {setFirst()}
+                        </Row>
+                    </div>
+                </Col>
+                <Col size="md-6">
+                    <div style={{ border: '2px solid black', padding: '10px', margin: '5px' }}>
+                        <h6 style={{ marginBottom: '10%' }}>Second Half</h6>
+                        <Row style={{ display: 'flex', justifyContent: 'around' }}>
+                            {setSecond()}
+                        </Row>
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col size="md-6">
+                    {cut(firstHalf)}
+                </Col>
+                <Col size="md-6">
+                    {cut(secondHalf)}
+                </Col>
+            </Row>
+    
+        </div>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Col from '../Column';
 
 export default function Array(props) {
     const [mounted, setMounted] = useState(false);
@@ -10,7 +11,7 @@ export default function Array(props) {
         setMounted(false);
 
         setTimeout(() => setMounted(true), props.time * 100);
-   
+
     }, [props.int]);
 
 
@@ -20,10 +21,11 @@ export default function Array(props) {
                 //  Delay each element's rendering
                 intitial={{ y: -600, opacity: 0, }}
                 animate={{ y: -10, opacity: 1 }}
-                
+
                 // St
                 style={{
-                    padding: '15%', backgroundColor: 'gray', borderRadius: '15%', textAlign: 'center', width: '2rem', height: '2rem', margin: '30%',}}
+                    padding: '15%', backgroundColor: 'gray', borderRadius: '15%', textAlign: 'center', width: '2rem', height: '2rem', margin: '30%',
+                }}
                 className={props.className}>
 
                 <motion.h4>
