@@ -12,6 +12,7 @@ export default function Display() {
     const [firstHalf, setFirstHalf] = useState([]);
     const [secondHalf, setSecondHalf] = useState([]);
     const [arraysLoaded, setArraysLoaded] = useState(false); // State variable to track arrays loaded
+    const [key, setKey] = useState(0); // State variable to trigger re-render and animation
 
     // Vaariants to delay animation
     const variants = {
@@ -41,6 +42,7 @@ export default function Display() {
     // UseEffect to make arrays
     useEffect(() => {
         makeArray();
+        setKey(prevKey => prevKey + 1);
     }, []);
 
     // useEffect to set arraysLoaded when first and second halves are loaded
@@ -54,6 +56,8 @@ export default function Display() {
             setArraysLoaded(true);
         }
     }, [firstHalf, secondHalf, array]);
+
+
 
     //Make array of random elements
     const makeArray = () => {
@@ -147,7 +151,7 @@ export default function Display() {
             const arr6 = secondHalf.slice(splitIndex2 * 2, arr.length);
 
             return (
-                <>
+                <Row id={key}>
                     <h1>Four</h1>
                     <Col style={{ border: '2px solid black', padding: '10px', margin: '0px' }} size={amount}>
                         <Array array={[...arr1]} />
@@ -172,7 +176,7 @@ export default function Display() {
                     <Col style={{ border: '2px solid black', padding: '10px', margin: '0px' }} size={amount}>
                         <Array array={[...arr6]} />
                     </Col>
-                </>
+                </Row>
             )
 
 
@@ -237,19 +241,28 @@ export default function Display() {
 
             <Row style={{ display: 'flex', justifyContent: 'around' }}>
                 {map()}
-                
+            </Row>  
+            <Row>
+
+            
                 {arraysLoaded && (
-                    cut(array)
+                    cutGPT(array)
                    
                 )}
-
+            </Row>             
+            <Row>
                 {arraysLoaded && (
-                    cut(firstHalf)
+                    cutGPT(firstHalf),
+                    cutGPT(firstHalf)
 
-                )}                
-
-
+                )}
             </Row>
+            <button>
+                Sort                                                  
+            </button>
+
+
+            
 
             
 
