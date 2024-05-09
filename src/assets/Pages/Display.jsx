@@ -47,7 +47,7 @@ export default function Display() {
         if (firstHalf.length > 0 && secondHalf.length > 0) {
             setArraysLoaded(true);
         }
-    }, [firstHalf], [secondHalf]);
+    }, [firstHalf, secondHalf]);
 
     //Make array of random elements
     const makeArray = () => {
@@ -97,7 +97,7 @@ export default function Display() {
                 Make Array
             </button>
             <Row style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                
+
 
             </Row>
             {/* Show full Array */}
@@ -110,13 +110,13 @@ export default function Display() {
                     }}
                 >
                     <Col size="md-6">
-                    <button
-                    onClick={splitArrays}>
-                    Split
-                </button>
-                </Col>
+                        <button
+                            onClick={splitArrays}>
+                            Split
+                        </button>
+                    </Col>
                 </div>
-            </Row>         
+            </Row>
         </div >
     )
 }
