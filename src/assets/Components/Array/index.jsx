@@ -10,6 +10,8 @@ export default function Array(props) {
     const [key, setKey] = useState(0);
     const [size, setSize] = useState(0);
 
+
+    // UseEffect to set mounted and array
     useEffect(() => {
         setMounted(true);
         setArray(props.array);
@@ -17,21 +19,22 @@ export default function Array(props) {
 
     }, [props.array]);
 
+
+    // Function to set column size based on array length
     const colSize = () => {
         const x = 12 / array.length;
         setSize(x);
-        console.log(`size: ${size}`);
+        //console.log(`size: ${size}`);
     };
 
     useEffect(() => {
         // Update the key whenever props.array changes to trigger re-render and animation
         setKey(prevKey => prevKey + 1);
-        console.log(`key: ${key}`)
+        //console.log(`key: ${key}`)
     }, [props.array]);
 
     const loadArray = () => {
-
-        console.log(`Size: ${size}`)
+        //console.log(`Size: ${size}`)
         return array && mounted &&
             (array.map((el, index) => (
                 <Col size={`md-${size}`} key={index}>
@@ -56,8 +59,6 @@ export default function Array(props) {
             return <>
                 {loadArray()}
             </>
-        
-
     };
 
 

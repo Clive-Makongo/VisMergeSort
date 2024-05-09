@@ -246,14 +246,14 @@ export default function Display() {
 
             
                 {arraysLoaded && (
-                    cutGPT(array)
+                    cut(array)
                    
                 )}
             </Row>             
             <Row>
                 {arraysLoaded && (
-                    cutGPT(firstHalf),
-                    cutGPT(firstHalf)
+                    cut(firstHalf),
+                    cut(firstHalf)
 
                 )}
             </Row>
