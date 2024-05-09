@@ -4,15 +4,16 @@ import Row from '../Row';
 import Col from '../Column';
 
 export default function Array(props) {
-    const [array, setArray] = useState([]);
+    const [array, setArray] = useState([...props.array]);
     const [sorted, setSorted] = useState([]);
-    const [mounted, setMounted] = useState(false);
+    const [mounted, setMounted] = useState(true);
     const [key, setKey] = useState(0);
     const [size, setSize] = useState(0);
 
     useEffect(() => {
         setMounted(true);
-        setArray(props.array);
+        setArray([...props.array]);
+        console.log(`Array from ARRRAYYY: ${array}`);
         colSize();
 
     }, [props.array]);
@@ -46,6 +47,7 @@ export default function Array(props) {
                         <motion.h4
                         id={`${key}`}>
                             {el}
+                            {console.log(`Element: ${el}`)}
                         </motion.h4>
                     </motion.div>
                 </Col>
@@ -53,9 +55,11 @@ export default function Array(props) {
     }
 
     const map = () => {
-            return <>
+        console.log(`Array MAPPPP: ${array}`)
+        return (
+            <>
                 {loadArray()}
-            </>
+            </>)
         
 
     };
@@ -85,11 +89,9 @@ export default function Array(props) {
 
 
     return (
-        array && mounted && (
             <>
                 {map()}
             </>
-        )
     )
 };
 
