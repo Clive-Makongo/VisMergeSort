@@ -15,7 +15,7 @@ export default function Array(props) {
     useEffect(() => {
         setMounted(true);
         setArray(props.array);
-        colSize();
+        colSize(); 
 
     }, [props.array]);
 
@@ -24,7 +24,7 @@ export default function Array(props) {
     const colSize = () => {
         const x = 12 / array.length;
         setSize(x);
-        //console.log(`size: ${size}`);
+        console.log(`size: ${size}`);
     };
 
     useEffect(() => {
