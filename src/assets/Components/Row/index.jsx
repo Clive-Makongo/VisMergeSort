@@ -1,7 +1,8 @@
 import React from "react";
 
 function Row(props) {
-    return <div className="row d-flex flex-row">{props.children}</div>;
+    return <div id={props.id} className="row d-flex flex-row">{props.children}</div>;
+
 }
 
 export default Row;
