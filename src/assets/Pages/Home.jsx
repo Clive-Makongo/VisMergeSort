@@ -15,10 +15,11 @@ export default function Home() {
     const [colArrayLoaded, setColArrayLoaded] = useState(false); // State variable to track colArray loaded
     const [colObj, setColObj] = useState({}); // State variable to hold colArray object
     const [colObjLoaded, setColObjLoaded] = useState(false); // State variable to track colObj loaded
+    const [visibility, setVisibility] = useState("visible"); // State variable to track visibility of array
 
     // UseEffect to make arrays
     useEffect(() => {
-        makeArray();
+        
         pushAllCuts(array);
 
     }, []);
@@ -50,8 +51,11 @@ export default function Home() {
         setArray(newArray);
         setArraysLoaded(true);
         pushAllCuts(newArray);
+        
 
     };
+
+    
 
     //UseEffect to track colArray and colObj
     useEffect(() => {
@@ -96,7 +100,8 @@ export default function Home() {
             // UGLY USESTATE WORKAROUND
             colArray[0] = arr;
             setColObj(obj);
-            console.log(colArray, `colObj: ${colObj}`, colObj);
+            
+
             //setColArray(obj);
 
         } else {
@@ -104,12 +109,11 @@ export default function Home() {
         }
     };
 
-    const displayArray = (i) => {
+    const displayArray = (i, id) => {
         return colArrayLoaded && colObjLoaded && (
             colObj[i][0].map((el, index) => {
-                console.log(`el: ${el}`, `index`, index, `el`, el);
                 return (
-                    <Col style={{ border: "2px, solid, black", display: "flex", flexDirection: "row" }} size={`md-${el[0].length}`} key={index}>
+                    <Col id={id} style={{ border: "2px, solid, black", display: "flex", flexDirection: "row" }} size={`md-${el[0].length}`} key={index}>
                         <Array array={[...el[0]]} />
                     </Col>
                 )
@@ -121,7 +125,7 @@ export default function Home() {
         <>
             <Container>
                 <Row>
-                    <Col size='md-12'>
+                    <Col size='md-12' id="make-btn">
                         {/* Show full Array */}
                         <button
                             onClick={makeArray}>
@@ -129,9 +133,16 @@ export default function Home() {
                         </button>
                     </Col>
 
-                    {arraysLoaded && (
-                        displayArray('id_6')
-                    )}
+                    <Col style={{visibility: `${visibility}`}} size="md-12" id="first-array">
+                        {arraysLoaded && (
+                            displayArray('id_3','id_1')
+                        )}
+                    </Col>
+
+                    <button ></button>
+                    
+
+
 
                 </Row>
             </Container>

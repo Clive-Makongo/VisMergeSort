@@ -22,22 +22,27 @@ export default function Array(props) {
 
     // Function to set column size based on array length
     const colSize = () => {
-        const x = 12 / array.length;
+        let x = 6;
+        console.log(`Array length: ${array.length}`, array.length);
+        if (array.length === 0) x = 6;
+        else x = 12 / array.length;
         setSize(x);
         console.log(`size: ${size}`);
+        console.log(`x: `, x);
     };
 
     useEffect(() => {
         // Update the key whenever props.array changes to trigger re-render and animation
-        setKey(prevKey => prevKey + 1);
+        setKey(prevKey => prevKey + 1)
         //console.log(`key: ${key}`)
     }, [props.array]);
 
     const loadArray = () => {
+
         //console.log(`Size: ${size}`)
         return array && mounted &&
             (array.map((el, index) => (
-                <Col size={`md-${size}`} key={index}>
+                <Col size={`md-${size}`} key={index} id={`${array.length}-${key}`}>
                     <motion.div
                         className={`${size}`} id={key}
                         initial={{ y: -600, opacity: 0 }}
