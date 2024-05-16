@@ -16,6 +16,7 @@ export default function Home() {
     const [colObj, setColObj] = useState({}); // State variable to hold colArray object
     const [colObjLoaded, setColObjLoaded] = useState(false); // State variable to track colObj loaded
     const [visibility, setVisibility] = useState("visible"); // State variable to track visibility of array
+    const [split, setSplit] = useState(false); // State variable to track split
 
     // UseEffect to make arrays
     useEffect(() => {
@@ -95,7 +96,7 @@ export default function Home() {
                 obj[`id_${i}`] = res; // Assign res to object with an ID
                 console.log(obj);
                 i++;
-            } while (i <= 6);
+            } while (i < 7);
 
             // UGLY USESTATE WORKAROUND
             colArray[0] = arr;
@@ -113,13 +114,20 @@ export default function Home() {
         return colArrayLoaded && colObjLoaded && (
             colObj[i][0].map((el, index) => {
                 return (
-                    <Col id={id} style={{ border: "2px, solid, black", display: "flex", flexDirection: "row" }} size={`md-${el[0].length}`} key={index}>
-                        <Array array={[...el[0]]} />
+                    <Col name={`${id}`} id={id} style={{ border: "2px, solid, black", display: "flex", flexDirection: "row" }} size={`md-${el[0].length}`} key={index}>
+                        <Array
+                            // Hash is a unique identifier for each element
+                            hash={`${i}-${index}`}
+                            array={[...el[0]]} />
                     </Col>
                 )
             })
-        )
-     }
+        );
+    };
+
+    const handleSplit = () => { 
+        setSplit(true);
+    }
 
     return (
         <>
@@ -133,15 +141,32 @@ export default function Home() {
                         </button>
                     </Col>
 
-                    <Col style={{visibility: `${visibility}`}} size="md-12" id="first-array">
+                    <Col style={{visibility: `${visibility}`}} size="md-12" id="first-array"
+                    name={`id-1`}>
                         {arraysLoaded && (
-                            displayArray('id_3','id_1')
+                            displayArray('id_1','id_1')
                         )}
                     </Col>
 
-                    <button ></button>
-                    
+                    <button onClick={handleSplit}>SPLIT</button>
 
+                    {split && (
+                        displayArray('id_2', 'id_2')
+                    )}
+                    
+                    {split && (
+                        displayArray('id_4', 'id_4')
+                    )}
+      
+                    {split && (
+                        displayArray('id_6', 'id_6')
+                    )}
+
+                    {split && (
+                        <button>
+                            Sort
+                        </button>
+                    )}
 
 
                 </Row>
