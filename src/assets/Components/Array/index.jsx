@@ -23,12 +23,12 @@ export default function Array(props) {
     // Function to set column size based on array length
     const colSize = () => {
         let x = 1;
-        console.log(`Array length: ${array.length}`, array.length);
+        //console.log(`Array length: ${array.length}`, array.length);
         if (!array.length) x = 1;
         else x = 12 / array.length;
         setSize(x);
-        console.log(`size: ${size}`);
-        console.log(`x: `, x);
+        //console.log(`size: ${size}`);
+        //console.log(`x: `, x);
     };
 
     useEffect(() => {

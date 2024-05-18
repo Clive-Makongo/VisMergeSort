@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
+import Sort from './Sort';
 import Array from '../Components/Array';
 import Container from '../Components/Container';
 import Row from '../Components/Row';
@@ -166,6 +167,10 @@ export default function Home() {
                         <button>
                             Sort
                         </button>
+                    )}
+
+                    {split && (
+                        <Sort array={colArray[0][0]} />
                     )}
 
 
