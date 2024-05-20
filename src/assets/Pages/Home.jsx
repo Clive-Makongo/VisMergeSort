@@ -17,7 +17,8 @@ export default function Home() {
     const [colObj, setColObj] = useState({}); // State variable to hold colArray object
     const [colObjLoaded, setColObjLoaded] = useState(false); // State variable to track colObj loaded
     const [visibility, setVisibility] = useState("visible"); // State variable to track visibility of array
-    const [split, setSplit] = useState(false); // State variable to track split
+    const [split, setSplit] =
+        useState(false); // State variable to track split
 
     // UseEffect to make arrays
     useEffect(() => {
@@ -39,7 +40,7 @@ export default function Home() {
         if (array.length) {
 
             setKey(prevKey => prevKey + 1);
-            console.log(colArray);
+            //console.log(colArray);
         }
     }, [array]);
 
@@ -61,10 +62,10 @@ export default function Home() {
 
     //UseEffect to track colArray and colObj
     useEffect(() => {
-        console.log(`colArray: `, colArray, `colObj: `, colObj);
+        //console.log(`colArray: `, colArray, `colObj: `, colObj);
 
         if (colArray.length > 0) {
-            console.log(`colArray: ${colArray}, colObj: ${colObj}`);
+            //console.log(`colArray: ${colArray}, colObj: ${colObj}`);
 
             setColArrayLoaded(true);
             setColObjLoaded(true);
@@ -93,9 +94,9 @@ export default function Home() {
                 let res = [];
                 res.push(renderArray(array, i));
                 arr.push(res);
-                console.log(res, `i: ${i}`);
+                //console.log(res, `i: ${i}`);
                 obj[`id_${i}`] = res; // Assign res to object with an ID
-                console.log(obj);
+                //console.log(obj);
                 i++;
             } while (i < 7);
 
@@ -115,11 +116,14 @@ export default function Home() {
         return colArrayLoaded && colObjLoaded && (
             colObj[i][0].map((el, index) => {
                 return (
-                    <Col name={`${id}`} id={id} style={{ border: "2px, solid, black", display: "flex", flexDirection: "row" }} size={`md-${el[0].length}`} key={index}>
+                    <Col name={`${id}`} id={`${id}-child-row-${index}`} style={{ border: "2px, solid, black", display: "flex", flexDirection: "row" }} size={`md-${el[0].length}`} key={`${id}-array-row-${index}`}>
                         <Array
                             // Hash is a unique identifier for each element
                             hash={`${i}-${index}`}
-                            array={[...el[0]]} />
+                            array={[...el[0]]}
+                            id={id}
+                            
+                        />
                     </Col>
                 )
             })
@@ -149,7 +153,7 @@ export default function Home() {
                         )}
                     </Col>
 
-                    <button onClick={handleSplit}>SPLIT</button>
+                    { arraysLoaded && (<button onClick={handleSplit}>SPLIT</button>)}
 
                     {split && (
                         displayArray('id_2', 'id_2')
@@ -163,14 +167,16 @@ export default function Home() {
                         displayArray('id_6', 'id_6')
                     )}
 
-                    {split && (
+                    {split &&(
                         <button>
                             Sort
                         </button>
                     )}
 
                     {split && (
-                        <Sort array={colArray[0][0]} />
+                        <Col size="md-2">
+                            <Sort array={colArray[0][0]} />
+                        </Col>
                     )}
 
 

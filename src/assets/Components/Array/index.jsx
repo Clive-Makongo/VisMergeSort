@@ -43,16 +43,17 @@ export default function Array(props) {
                 // Generate a unique ID by combining index with a prefix
                 const uniqueId = `element-${index}`;
                 return (
-                    <Col name={`${props.hash}`} size={`md-${size}`} key={index} id={`${array.length}-${uniqueId}-${props.hash} ${uniqueId}`}>
+                    <Col name={`${props.hash}`} size={`md-${size}`} key={index} id={`size-${array.length}-${uniqueId}-${props.hash} ${props.id}-col-${index} ${uniqueId} `}>
                         <motion.div
-                            className={`${size}`} id={uniqueId}
+                            className={`${props.id}-${size}`} id={`${uniqueId} ${props.id}-element-${index}`}
                             initial={{ y: -600, opacity: 0 }}
                             animate={{ y: -10, opacity: 1 }}
                             transition={{ delay: index * 0.05 }}
                             style={{ backgroundColor: 'gray', borderRadius: '15%', textAlign: 'center', width: '2rem', height: '2rem', margin: '30%' }}
-                            key={key}
+                            key={`${props.id}-col-${index}`}
                         >
-                            <motion.h4>
+                            <motion.h4
+                                key={`${props.id}-element-${index}`}>
                                 {el}
                             </motion.h4>
                         </motion.div>
