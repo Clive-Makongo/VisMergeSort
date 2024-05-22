@@ -10,11 +10,12 @@ export default function Sort(props) {
     const [elementsHtml, setElementsHtml] = useState([]); // State to store the HTML content
     const [elementsLoaded, setElementsLoaded] = useState(false); // State to store Elements Loaded
     const elementRef = useRef([]); // Ref to store the element reference
-    const [clicked, setClicked] = useState(false); // State to track if the element is clicked
+    const [clicked, setClicked] = useState({}); // State to track if the element is clicked
     const [clickedObjects, setClickedObjects] = useState([]); // State to store the clicked object
     const [clickedObjects2, setClickedObjects2] = useState([]); // State to store the clicked object
     const [children, setChildren] = useState([]) //State to hold element thats been clicked
     const [grandChildren, setGrandChildren] = useState([]); //State to hold grand children
+    const [grandChildrenLoaded, setGrandChildrenLoaded] = useState(false); //State to hold grand children loaded
 
 
     useEffect(() => {
@@ -82,15 +83,13 @@ export default function Sort(props) {
         console.log(`Clicked Objjjjj`, clickedObjects);
         console.log(`Clicked Objjjjj2`, clickedObjects2);
         console.log(`Clicked CHILDDD`, children);
-
-        addClickedObjFunc();
         console.log(`Grand Children: `, grandChildren);
-        
 
         
-    }, [props]);
+    }, [clickedObjects, clickedObjects2, children]);
 
     const handleClick = (index) => {
+
         const parentElement = elementRef.current[index];
         if (parentElement && parentElement.childNodes.length === 2) {
             const firstChild = parentElement.childNodes[0];
@@ -153,37 +152,35 @@ export default function Sort(props) {
 
     };
 
-    const addClickedObjFunc = () => { 
-        const parentElement = elementRef.current;
-        const grandChildrenArr = [];
-        setClicked(true);
+    const createSortObj = () => {
+        if (elementRef.current && elementRef.current.length > 0) {
+            elementRef.current.forEach((el, index) => {
+                if (el && el.childNodes.length > 0) {
+                    const firstChildNode = el.childNodes[0];
+                    const secondChildNode = el.childNodes[1];
 
-        if (parentElement) { 
-            console.log(`Parent Element: `, parentElement[0].childNodes);
+                    if (firstChildNode && firstChildNode.childNodes.length > 0 && secondChildNode && secondChildNode.childNodes.length > 0) {
+                        const firstChild = firstChildNode.childNodes[0]?.firstChild?.innerHTML;
+                        const secondChild = secondChildNode.childNodes[0]?.firstChild?.innerHTML;
+                        console.log(`Second Child: `, secondChild);
+                        console.log(`First Child: `, firstChild);
 
-            parentElement.forEach((child, index) => {
-                let firstChild = child.childNodes[0];
-                let secondChild = child.childNodes[1];
-
-                console.log(`First Child ${index}: `, firstChild);
-                console.log(`Second Child ${index}: `, secondChild);
-
-                
-
-                grandChildren[index] = {firstChild: firstChild, secondChild: secondChild}
+                        grandChildren[index] = { firstChild, secondChild };
+                    }
+                } else {
+                    console.log(`Element ${index} does not have enough child nodes.`);
+                }
             });
-            
-            console.log(grandChildrenArr);
-
-            
-        };
-
-        
+        } else {
+            console.log('Element references are not loaded yet or empty.');
+        }
     };
+
 
     return (
         <>
             <Row>
+                {createSortObj()}
                 <h5>Click to Sort</h5>
                 {elementsLoaded && elementsHtml[0] !== '' && children ? (
                     elementsHtml.map((html, index) => (
@@ -195,7 +192,7 @@ export default function Sort(props) {
                             <button
                                 id={`button-sort-${index}-id-6`}
                                 style={{ backgroundColor: 'gray' }}
-                                onClick={addClickedObjFunc}>
+                                onClick={() => handleClick(index)}>
                                 <div ref={el => (elementRef.current[index] = el)}>
                                     <div dangerouslySetInnerHTML={{ __html: html }} />
 
@@ -209,19 +206,7 @@ export default function Sort(props) {
                 )}
 
 
-                {clicked && grandChildren && (
-                    <div className="row">
-                        {grandChildren.map((obj, index) => (
-                            <div className="col-md-2" key={index}>
-                                <div>
-                                    <h5>Object {index + 1}</h5>
-                                    <p>First Child: {obj[index].firstChild}</p>
-                                    <p>Second Child: {obj[index].secondChild}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
+              
             </Row>
         </>
     );
