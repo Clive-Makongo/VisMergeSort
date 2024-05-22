@@ -153,7 +153,7 @@ export default function Home() {
                         )}
                     </Col>
 
-                    { arraysLoaded && (<button onClick={handleSplit}>SPLIT</button>)}
+                    { arraysLoaded && (<button onClick={handleSplit}>SPLIT </button>)}
 
                     {split && (
                         displayArray('id_2', 'id_2')
@@ -167,14 +167,8 @@ export default function Home() {
                         displayArray('id_6', 'id_6')
                     )}
 
-                    {split &&(
-                        <button>
-                            Sort
-                        </button>
-                    )}
-
-                    {split && (
-                        <Col size="md-2">
+                    {split &&  (
+                        <Col size="md-12">
                             <Sort array={colArray[0][0]} />
                         </Col>
                     )}

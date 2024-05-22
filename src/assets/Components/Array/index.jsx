@@ -24,8 +24,8 @@ export default function Array(props) {
     const colSize = () => {
         let x = 1;
         //console.log(`Array length: ${array.length}`, array.length);
-        if (!array.length) x = 1;
-        else x = 12 / array.length;
+        if (!props.array.length) x = 1;
+        else x = 12 / props.array.length;
         setSize(x);
         //console.log(`size: ${size}`);
         //console.log(`x: `, x);
@@ -53,7 +53,7 @@ export default function Array(props) {
                             key={`${props.id}-col-${index}`}
                         >
                             <motion.h4
-                                key={`${props.id}-element-${index}`}>
+                                key={`${props.id}-element-${index} ${key}`}>
                                 {el}
                             </motion.h4>
                         </motion.div>
