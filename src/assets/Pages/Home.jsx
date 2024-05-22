@@ -22,7 +22,7 @@ export default function Home() {
 
     // UseEffect to make arrays
     useEffect(() => {
-        
+
         pushAllCuts(array);
 
     }, []);
@@ -54,11 +54,11 @@ export default function Home() {
         setArray(newArray);
         setArraysLoaded(true);
         pushAllCuts(newArray);
-        
+
 
     };
 
-    
+
 
     //UseEffect to track colArray and colObj
     useEffect(() => {
@@ -103,7 +103,7 @@ export default function Home() {
             // UGLY USESTATE WORKAROUND
             colArray[0] = arr;
             setColObj(obj);
-            
+
 
             //setColArray(obj);
 
@@ -122,7 +122,7 @@ export default function Home() {
                             hash={`${i}-${index}`}
                             array={[...el[0]]}
                             id={id}
-                            
+
                         />
                     </Col>
                 )
@@ -130,7 +130,7 @@ export default function Home() {
         );
     };
 
-    const handleSplit = () => { 
+    const handleSplit = () => {
         setSplit(true);
     }
 
@@ -146,28 +146,28 @@ export default function Home() {
                         </button>
                     </Col>
 
-                    <Col style={{visibility: `${visibility}`}} size="md-12" id="first-array"
-                    name={`id-1`}>
+                    <Col style={{ visibility: `${visibility}` }} size="md-12" id="first-array"
+                        name={`id-1`}>
                         {arraysLoaded && (
-                            displayArray('id_1','id_1')
+                            displayArray('id_1', 'id_1')
                         )}
                     </Col>
 
-                    { arraysLoaded && (<button onClick={handleSplit}>SPLIT </button>)}
+                    {arraysLoaded && (<button onClick={handleSplit}>SPLIT </button>)}
 
                     {split && (
                         displayArray('id_2', 'id_2')
                     )}
-                    
+
                     {split && (
                         displayArray('id_4', 'id_4')
                     )}
-      
+
                     {split && (
                         displayArray('id_6', 'id_6')
                     )}
 
-                    {split &&  (
+                    {split && (
                         <Col size="md-12">
                             <Sort array={colArray[0][0]} />
                         </Col>
