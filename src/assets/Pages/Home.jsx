@@ -169,7 +169,7 @@ export default function Home() {
                         displayArray('id_6', 'id_6')
                     )}
 
-                    {split && (
+                    {split && arraysLoaded && colArrayLoaded && (
                         <Col
                             id="sort-field-id"
                             name="sort-field"

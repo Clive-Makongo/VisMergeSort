@@ -5,6 +5,7 @@ import Container from '../Components/Container';
 import Row from '../Components/Row';
 import Col from '../Components/Column';
 import { motion } from 'framer-motion';
+import { Modal, Button } from 'react-bootstrap';
 
 export default function Sort(props) {
     const [elementsHtml, setElementsHtml] = useState([]); // State to store the HTML content
@@ -16,7 +17,9 @@ export default function Sort(props) {
     const [children, setChildren] = useState([]) //State to hold element thats been clicked
     const [grandChildren, setGrandChildren] = useState([]); //State to hold grand children
     const [grandChildrenLoaded, setGrandChildrenLoaded] = useState(false); //State to hold grand children loaded
-
+    const [modalShow, setModalShow] = useState(false);
+    const [modalContent, setModalContent] = useState(null);
+    const [elementSwapped, setElementSwapped] = useState({});
 
     useEffect(() => {
         //console.log(`Props Array: `, props.array);
@@ -76,17 +79,18 @@ export default function Sort(props) {
         setClickedObjects([])
         setChildren([]);
         setGrandChildren([]);
-        
+        setClicked({});
+
+        createSortObj();
+
+
     }, [props.array]);
 
     useEffect(() => {
-        console.log(`Clicked Objjjjj`, clickedObjects);
-        console.log(`Clicked Objjjjj2`, clickedObjects2);
-        console.log(`Clicked CHILDDD`, children);
-        console.log(`Grand Children: `, grandChildren);
+        console.log(`Clicked: `, clicked);
 
-        
-    }, [clickedObjects, clickedObjects2, children]);
+    }, [grandChildrenLoaded, children, clickedObjects, clickedObjects2, clicked]);
+
 
     const handleClick = (index) => {
 
@@ -97,21 +101,11 @@ export default function Sort(props) {
 
             setChildren(prevChildren => [...prevChildren, firstChild, secondChild]);
 
-            setClickedObjects(prevState => ({
-                ...prevState,
-                [index]: {
-                    firstChild: firstChild.innerText,
-                    secondChild: secondChild.innerText
-                }
-            }));
-
 
         } else if (parentElement && parentElement.childNodes.length === 1) {
 
             // Node List
-            const childNodes = parentElement.childNodes[0].childNodes;
-
-            console.log(`Child NODES PARENT`, childNodes);
+            const childNodes = parentElement.childNodes[0].childNodes;;
 
 
             // Make an Array from node lists
@@ -120,35 +114,23 @@ export default function Sort(props) {
                 newChildren[idx] = child;
             });
 
-            console.log(`New CHILLLD: `, newChildren);
-
             // Set State with Child Divs
             setChildren(prevChildren => [...prevChildren, newChildren]);
 
-            //Grab internal Text from nodes, set them in State Obj
-            setClickedObjects2(prevState => ({
-                ...prevState,
-                [index]: {
-                    firstChild: childNodes[0].innerText,
-                    secondChild: childNodes[1].innerText
-                }
-
-            }));
-
-            setClickedObjects(prevState => [...prevState, {
-                [index]: {
-                    firstChild: childNodes[0].innerText,
-                    secondChild: childNodes[1].innerText
-                }
-            }]);
-
-            setClicked(true);
-            console.log(`Clicked: `, clicked);
 
         } else {
             console.log('Parent element does not have the right number of nodes');
             alert(`Element does not have right number of nodes`);
         };
+
+        createSortObj();
+
+        setClicked({
+            ...clicked,
+            [index]: true
+        });
+
+        sort(index);
 
     };
 
@@ -162,10 +144,15 @@ export default function Sort(props) {
                     if (firstChildNode && firstChildNode.childNodes.length > 0 && secondChildNode && secondChildNode.childNodes.length > 0) {
                         const firstChild = firstChildNode.childNodes[0]?.firstChild?.innerHTML;
                         const secondChild = secondChildNode.childNodes[0]?.firstChild?.innerHTML;
-                        console.log(`Second Child: `, secondChild);
-                        console.log(`First Child: `, firstChild);
+                        //console.log(`Second Child: `, secondChild);
+                        //console.log(`First Child: `, firstChild);
 
                         grandChildren[index] = { firstChild, secondChild };
+                        console.log(`Grand Children: `, grandChildren);
+
+                        setGrandChildren([...grandChildren]);
+
+                        setGrandChildrenLoaded(true);
                     }
                 } else {
                     console.log(`Element ${index} does not have enough child nodes.`);
@@ -174,13 +161,44 @@ export default function Sort(props) {
         } else {
             console.log('Element references are not loaded yet or empty.');
         }
+
+    };
+
+    const sort = (index) => {
+
+        if (grandChildren[index].firstChild > grandChildren[index].secondChild) {
+            const temp = grandChildren[index].firstChild;
+            grandChildren[index].firstChild = grandChildren[index].secondChild;
+            grandChildren[index].secondChild = temp;
+
+            setModalContent(`Element 1 is Greater than Element 2. Swapping Elements... 
+
+            Element 1: ${grandChildren[index].firstChild} Element 2: ${grandChildren[index].secondChild}`);
+            setModalShow(true);
+            setElementSwapped({ index, swapped: true });
+            console.log(`Element Swapped: `, elementSwapped);
+        } else if (grandChildren[index].firstChild === grandChildren[index].secondChild) {
+            console.log('Elements are equal. No need to swap.');
+            setModalContent(`Element 1 is Equal to Element 2. No need to swap. 
+
+            Element 1: ${grandChildren[index].firstChild} Element 2: ${grandChildren[index].secondChild}`);
+            setModalShow(true);
+        } else {
+            console.log('Elements are already sorted');
+            setModalContent(`Element 1 is Less than Element 2. No need to swap. 
+
+            Element 1: ${grandChildren[index].firstChild} Element 2: ${grandChildren[index].secondChild}`);
+            setModalShow(true);
+        }
+
+        setGrandChildren([...grandChildren]);
+        console.log(`Sorted Grand Children: `, grandChildren);
     };
 
 
     return (
         <>
             <Row>
-                {createSortObj()}
                 <h5>Click to Sort</h5>
                 {elementsLoaded && elementsHtml[0] !== '' && children ? (
                     elementsHtml.map((html, index) => (
@@ -206,8 +224,84 @@ export default function Sort(props) {
                 )}
 
 
-              
+                {grandChildrenLoaded && grandChildren.length > 0 &&
+                    <>
+                        <h5>Sorted Elements</h5>
+                        <div style={{ border: 'solid black 2px' }} className='row'>
+                            {grandChildren.length > 0 && (
+
+                                grandChildren.map((el, index) => (
+                                    <Col
+                                        id={`col-sort-${index}-id-6`}
+                                        name='button-children'
+                                        size="md-2"
+                                        key={index}>
+                                        <motion.div
+                                            style={{ padding: '1.5rem'}}
+                                            className={`col-sort-${index}-id-6`}
+                                            id={`div-sorting-${index}-id-6`}
+                                            initial={{ y: -300, opacity: 0 }}
+                                            animate={{ y: -10, opacity: 1 }}
+                                            transition={{ delay: index * 0.5 }}
+                                            key={`key-${index}`}
+                                        >
+                                            <motion.p
+                                                key={`key-1-${index}`}
+                                                initial={{ y: -600, opacity: 0 }}
+                                                animate={{ y: -10, opacity: 1 }}
+                                                style={{ border: 'black solid 2px' }}
+                                            >
+                                                Element 1: {el.firstChild}
+                                            </motion.p>
+                                            <motion.p
+                                                key={`p-sort-${index}-id-6`}
+                                                initial={{ y: -600, opacity: 0 }}
+                                                animate={{ y: -10, opacity: 1 }}
+                                                style={{ border: 'black solid 2px' }}
+                                            >
+                                                Element 2: {el.secondChild}
+                                            </motion.p>
+                                        </motion.div>
+                                    </Col>
+
+                                ))
+                            )}
+                    </div>
+                    
+                    <div className='row'>
+                        {Object.values(elementSwapped).length > 0 && (
+                            <div className='col-md-12'>
+                                <h5>Swapped Elements</h5>
+                                <p>Element 1: {grandChildren[elementSwapped.index].firstChild} Element 2: {grandChildren[elementSwapped.index].secondChild}</p>
+                            </div>
+                        )}
+
+                    </div>
+                    </>
+                }
             </Row>
+
+
+            {/* Modal Implementation */}
+            <Modal show={modalShow} onHide={() => setModalShow(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal Heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {modalContent && (
+                        <p>{modalContent}</p>
+
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setModalShow(false)}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => setModalShow(false)}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 }
