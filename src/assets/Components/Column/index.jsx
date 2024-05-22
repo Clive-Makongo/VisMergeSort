@@ -1,12 +1,16 @@
-import {useState, useEffect, React} from "react";
+import { useState, useEffect, React } from "react";
 
 function Col(props) {
     const [name, setName] = useState("");
 
+    
     useEffect(() => {
         setName(props.name);
+      
+        
     });
 
+    
     const size = props.size.split(" ").map(size => "col-" + size).join(" ");
 
     return <div style={props.style} id={`${props.id}`}

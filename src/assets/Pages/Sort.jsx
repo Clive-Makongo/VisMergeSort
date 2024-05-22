@@ -11,8 +11,10 @@ export default function Sort(props) {
     const [elementsLoaded, setElementsLoaded] = useState(false); // State to store Elements Loaded
     const elementRef = useRef([]); // Ref to store the element reference
     const [clicked, setClicked] = useState(false); // State to track if the element is clicked
-    const [clickedObjects, setClickedObjects] = useState({}); // State to store the clicked object
+    const [clickedObjects, setClickedObjects] = useState([]); // State to store the clicked object
+    const [clickedObjects2, setClickedObjects2] = useState([]); // State to store the clicked object
     const [children, setChildren] = useState([]) //State to hold element thats been clicked
+    const [grandChildren, setGrandChildren] = useState([]); //State to hold grand children
 
 
     useEffect(() => {
@@ -50,7 +52,7 @@ export default function Sort(props) {
             //console.log(`Elements HTMLLLLL: `, elementsHtml);
         }
     });
-    
+
     // useEffect(() => {
     //     const parentElement = elementRef.current;
     //     console.log(`Parent Element: `, parentElement);
@@ -65,19 +67,28 @@ export default function Sort(props) {
     //          });
     //         console.log(`Child Nodes: `, childNodes);
 
-           
+
     //     }
     //  },[])
 
     useEffect(() => {
-        setClickedObjects({})
+        setClickedObjects([])
         setChildren([]);
+        setGrandChildren([]);
+        
     }, [props.array]);
 
     useEffect(() => {
         console.log(`Clicked Objjjjj`, clickedObjects);
-        console.log(`Clicked CHILDDD`, children)
-    }, [clickedObjects, children])
+        console.log(`Clicked Objjjjj2`, clickedObjects2);
+        console.log(`Clicked CHILDDD`, children);
+
+        addClickedObjFunc();
+        console.log(`Grand Children: `, grandChildren);
+        
+
+        
+    }, [props]);
 
     const handleClick = (index) => {
         const parentElement = elementRef.current[index];
@@ -94,10 +105,10 @@ export default function Sort(props) {
                     secondChild: secondChild.innerText
                 }
             }));
-            
+
 
         } else if (parentElement && parentElement.childNodes.length === 1) {
-            
+
             // Node List
             const childNodes = parentElement.childNodes[0].childNodes;
 
@@ -115,19 +126,58 @@ export default function Sort(props) {
             // Set State with Child Divs
             setChildren(prevChildren => [...prevChildren, newChildren]);
 
-            // Grab internal Text from nodes, set them in State Obj
-            setClickedObjects(prevState => ({
+            //Grab internal Text from nodes, set them in State Obj
+            setClickedObjects2(prevState => ({
                 ...prevState,
                 [index]: {
                     firstChild: childNodes[0].innerText,
                     secondChild: childNodes[1].innerText
                 }
+
             }));
+
+            setClickedObjects(prevState => [...prevState, {
+                [index]: {
+                    firstChild: childNodes[0].innerText,
+                    secondChild: childNodes[1].innerText
+                }
+            }]);
+
+            setClicked(true);
+            console.log(`Clicked: `, clicked);
 
         } else {
             console.log('Parent element does not have the right number of nodes');
             alert(`Element does not have right number of nodes`);
         };
+
+    };
+
+    const addClickedObjFunc = () => { 
+        const parentElement = elementRef.current;
+        const grandChildrenArr = [];
+        setClicked(true);
+
+        if (parentElement) { 
+            console.log(`Parent Element: `, parentElement[0].childNodes);
+
+            parentElement.forEach((child, index) => {
+                let firstChild = child.childNodes[0];
+                let secondChild = child.childNodes[1];
+
+                console.log(`First Child ${index}: `, firstChild);
+                console.log(`Second Child ${index}: `, secondChild);
+
+                
+
+                grandChildren[index] = {firstChild: firstChild, secondChild: secondChild}
+            });
+            
+            console.log(grandChildrenArr);
+
+            
+        };
+
         
     };
 
@@ -136,42 +186,41 @@ export default function Sort(props) {
             <Row>
                 <h5>Click to Sort</h5>
                 {elementsLoaded && elementsHtml[0] !== '' && children ? (
-                elementsHtml.map((html, index) => (
-                    <Col id='col-children' size="md-2" key={index}>
-                        <button
-                             style={{ backgroundColor: 'gray' }} onClick={() => handleClick(index)}>
-                            <div ref={el => (elementRef.current[index] = el)}>
-                                <div dangerouslySetInnerHTML={{ __html: html }} />
-                                
-                            </div>
-                        </button>
-                    </Col>
+                    elementsHtml.map((html, index) => (
+                        <Col
+                            id={`col-sort-${index}-id-6`}
+                            name='button-children'
+                            size="md-2"
+                            key={index}>
+                            <button
+                                id={`button-sort-${index}-id-6`}
+                                style={{ backgroundColor: 'gray' }}
+                                onClick={addClickedObjFunc}>
+                                <div ref={el => (elementRef.current[index] = el)}>
+                                    <div dangerouslySetInnerHTML={{ __html: html }} />
 
-                ))
-            ) : (
-                <p>Loading...</p>
-            )}
+                                </div>
+                            </button>
+                        </Col>
 
-
-                {clicked && (
-
-                    <Col size='md-12'><div>
-                        <p>
-                            Clicked
-                        </p>
-                    </div>
-                    </Col>
-
+                    ))
+                ) : (
+                    <p>Loading...</p>
                 )}
 
-                {clicked && children && (
-                    children.map((child, index) => (
-                        <Col size='md-2' key={index}>
-                            <div>
-                                <div>{child}</div>
+
+                {clicked && grandChildren && (
+                    <div className="row">
+                        {grandChildren.map((obj, index) => (
+                            <div className="col-md-2" key={index}>
+                                <div>
+                                    <h5>Object {index + 1}</h5>
+                                    <p>First Child: {obj[index].firstChild}</p>
+                                    <p>Second Child: {obj[index].secondChild}</p>
+                                </div>
                             </div>
-                        </Col>
-                    ))
+                        ))}
+                    </div>
                 )}
             </Row>
         </>

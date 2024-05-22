@@ -146,7 +146,9 @@ export default function Home() {
                         </button>
                     </Col>
 
-                    <Col style={{ visibility: `${visibility}` }} size="md-12" id="first-array"
+                    <Col style={{ visibility: `${visibility}` }} sizes={["md-12", "xs-6"]}
+                        size="xs-1 md-12"
+                        id="first-array"
                         name={`id-1`}>
                         {arraysLoaded && (
                             displayArray('id_1', 'id_1')
@@ -168,7 +170,10 @@ export default function Home() {
                     )}
 
                     {split && (
-                        <Col size="md-12">
+                        <Col
+                            id="sort-field-id"
+                            name="sort-field"
+                            size="md-12">
                             <Sort array={colArray[0][0]} />
                         </Col>
                     )}
