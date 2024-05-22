@@ -77,6 +77,7 @@ export default function Sort(props) {
         setChildren([]);
         setGrandChildren([]);
 
+        addClickedObjFunc();
 
     }, [props.array]);
 
@@ -84,6 +85,11 @@ export default function Sort(props) {
         console.log(`Clicked Objjjjj`, clickedObjects);
         console.log(`Clicked Objjjjj2`, clickedObjects2);
         console.log(`Clicked CHILDDD`, children);
+
+        addClickedObjFunc();
+        console.log(`Grand Children: `, grandChildren);
+
+
 
     }, [props]);
 
@@ -151,32 +157,30 @@ export default function Sort(props) {
     };
 
     const addClickedObjFunc = () => {
-        if (elementRef.current.length > 0) {
-            const parentElement = elementRef.current;
-            const grandChildrenArr = [];
-            setClicked(true);
+        const parentElement = elementRef.current;
+        const grandChildrenArr = [];
+        setClicked(true);
 
-            if (parentElement) {
-                console.log(`Parent Element: `, parentElement[0].childNodes);
+        if (parentElement) {
+            console.log(`Parent Element: `, parentElement[0].childNodes);
 
-                parentElement.forEach((child, index) => {
-                    let firstChild = child.childNodes[0];
-                    let secondChild = child.childNodes[1];
+            parentElement.forEach((child, index) => {
+                let firstChild = child.childNodes[0];
+                let secondChild = child.childNodes[1];
 
-                    console.log(`First Child ${index}: `, firstChild);
-                    console.log(`Second Child ${index}: `, secondChild);
-
+                console.log(`First Child ${index}: `, firstChild);
+                console.log(`Second Child ${index}: `, secondChild);
 
 
-                    grandChildren[index] = { firstChild: firstChild.childNodes[0].childNodes[0].innerHTML, secondChild: secondChild.childNodes[0].childNodes[0].innerHTML }
-                    setGrandChildrenLoaded(true);
-                });
 
-                console.log(grandChildrenArr);
+                grandChildren[index] = { firstChild: firstChild.childNodes[0].childNodes[0].innerHTML, secondChild: secondChild.childNodes[0].childNodes[0].innerHTML }
+                setGrandChildrenLoaded(true);
+            });
+
+            console.log(grandChildrenArr);
 
 
-            }
-        }
+        };
 
 
     };
@@ -208,7 +212,6 @@ export default function Sort(props) {
                     <p>Loading...</p>
                 )}
 
-                {addClickedObjFunc()}
 
             </Row>
         </>
