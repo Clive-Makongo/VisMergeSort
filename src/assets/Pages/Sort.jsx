@@ -274,15 +274,16 @@ export default function Sort(props) {
                             {Object.keys(clicked).length === 6 &&  (
                                     grandChildren.map((el, index) => (
                                         <motion.div
-                                            className='row'
+                                            style={{padding: '1.5rem'}}
+                                            className='col-md-2 d-flex flex-row justify-content-center align-items-center'
                                             initial={{ y: -600, opacity: 0 }}
                                             animate={{ y: -10, opacity: 1 }}
                                             transition={{ delay: index * 0.5 }}
                                         >
-                                            <Col size="md-1">
+                                            <Col size="md-6">
                                                 {el.firstChild}
                                             </Col>
-                                            <Col size="md-1">
+                                            <Col size="md-6">
                                                 {el.secondChild}
                                             </Col>
                                         </motion.div>
