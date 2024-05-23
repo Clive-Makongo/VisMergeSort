@@ -65,7 +65,8 @@ export default function Home() {
         //console.log(`colArray: `, colArray, `colObj: `, colObj);
 
         if (colArray.length > 0) {
-            //console.log(`colArray: ${colArray}, colObj: ${colObj}`);
+            console.log(`Col Obj: `, colObj);
+            console.log(`Col Array: `, colArray);
 
             setColArrayLoaded(true);
             setColObjLoaded(true);
