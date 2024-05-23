@@ -102,7 +102,7 @@ export default function Home() {
             } while (i < 7);
 
             // UGLY USESTATE WORKAROUND
-            colArray[0] = arr;
+            setColArray(arr);
             setColObj(obj);
 
 

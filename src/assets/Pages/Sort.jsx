@@ -4,7 +4,7 @@ import Arrays from '../Components/Array';
 import Container from '../Components/Container';
 import Row from '../Components/Row';
 import Col from '../Components/Column';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Modal, Button } from 'react-bootstrap';
 
 export default function Sort(props) {
@@ -21,6 +21,12 @@ export default function Sort(props) {
     const [modalContent, setModalContent] = useState(null);
     const [elementSwapped, setElementSwapped] = useState({});
 
+    const variants = {
+        initial: { y: -300, opacity: 0 },
+        animate: { y: -10, opacity: 1 },
+        swapped: { y: 0, scale: 1.1, opacity: 1, backgroundColor: '#f0f', transition: { duration: 0.5 } }
+
+    }
     useEffect(() => {
         //console.log(`Props Array: `, props.array);
         //console.log(elementsHtml[0], `: Elements HTML`)
@@ -91,6 +97,19 @@ export default function Sort(props) {
         console.log(`Clicked Length: `, Object.keys(clicked).length);
 
     }, [grandChildrenLoaded, children, clickedObjects, clickedObjects2, clicked]);
+
+    useEffect(() => {
+        if (grandChildren.length > 0 && grandChildrenLoaded) {
+            console.log(`Grand Children UpdatedDDDDD: `, grandChildren);
+           
+        }
+    }, [grandChildren, grandChildrenLoaded]);
+
+    useEffect(() => {
+        if (elementSwapped.swapped) {
+            console.log(`Element Swapped: `, elementSwapped);
+        }
+     }, [elementSwapped]);
 
 
     const handleClick = (index) => {
@@ -199,7 +218,7 @@ export default function Sort(props) {
 
 
     return (
-        <>
+        <AnimatePresence>
             <Row>
                 <h5>Click to Sort</h5>
                 {elementsLoaded && elementsHtml[0] !== '' && children ? (
@@ -210,6 +229,7 @@ export default function Sort(props) {
                             size="md-2"
                             key={index}>
                             <button
+                                
                                 id={`button-sort-${index}-id-6`}
                                 style={{ backgroundColor: 'gray' }}
                                 onClick={() => handleClick(index)}>
@@ -239,6 +259,7 @@ export default function Sort(props) {
                                         size="md-2"
                                         key={index}>
                                         <motion.div
+                                            layout
                                             style={{ padding: '1.5rem' }}
                                             className={`col-sort-${index}-id-6`}
                                             id={`div-sorting-${index}-id-6`}
@@ -248,6 +269,7 @@ export default function Sort(props) {
                                             key={`key-${index}`}
                                         >
                                             <motion.p
+                                                layout
                                                 key={`key-1-${index}`}
                                                 initial={{ y: -600, opacity: 0 }}
                                                 animate={{ y: -10, opacity: 1 }}
@@ -256,6 +278,7 @@ export default function Sort(props) {
                                                 Element 1: {el.firstChild}
                                             </motion.p>
                                             <motion.p
+                                                layout
                                                 key={`p-sort-${index}-id-6`}
                                                 initial={{ y: -600, opacity: 0 }}
                                                 animate={{ y: -10, opacity: 1 }}
@@ -270,24 +293,24 @@ export default function Sort(props) {
                             )}
                         </div>
 
-                    <div style={{display: 'flex', flex: 'row'}} className='row d-flex flex-row'>
-                            {Object.keys(clicked).length === 6 &&  (
-                                    grandChildren.map((el, index) => (
-                                        <motion.div
-                                            style={{padding: '1.5rem'}}
-                                            className='col-md-2 d-flex flex-row justify-content-center align-items-center'
-                                            initial={{ y: -600, opacity: 0 }}
-                                            animate={{ y: -10, opacity: 1 }}
-                                            transition={{ delay: index * 0.5 }}
-                                        >
-                                            <Col size="md-6">
-                                                {el.firstChild}
-                                            </Col>
-                                            <Col size="md-6">
-                                                {el.secondChild}
-                                            </Col>
-                                        </motion.div>
-                                    ))                         
+                        <div style={{ display: 'flex', flex: 'row' }} className='row d-flex flex-row'>
+                            {Object.keys(clicked).length === 6 && (
+                                grandChildren.map((el, index) => (
+                                    <motion.div
+                                        style={{ padding: '1.5rem' }}
+                                        className='col-md-2 d-flex flex-row GAYYYY justify-content-center align-items-center'
+                                        initial={{ y: -600, opacity: 0 }}
+                                        animate={{ y: -10, opacity: 1 }}
+                                        transition={{ delay: index * 0.5 }}
+                                    >
+                                        <Col key={`col-1-${index}`} size="md-6">
+                                            {el.firstChild}
+                                        </Col>
+                                        <Col key={`col-2-${index}`} size="md-6">
+                                            {el.secondChild}
+                                        </Col>
+                                    </motion.div>
+                                ))
                             )}
                         </div>
                     </>
@@ -315,6 +338,6 @@ export default function Sort(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </>
+        </AnimatePresence>
     );
 }
