@@ -251,7 +251,7 @@ export default function Sort(props) {
                     <>
                     <h5>Sorted Elements</h5>
                     <p>How Many Clicked: {Object.keys(clicked).length }</p>
-                        <div style={{ border: 'solid black 2px' }} className='row'>
+                        <div style={{ border: 'solid black 2px', borderRadius: "1rem" }} className='row'>
                             {grandChildren.length > 0 && (
                                 grandChildren.map((el, index) => (
                                     <Col
@@ -274,7 +274,7 @@ export default function Sort(props) {
                                                 key={`key-1-${index}`}
                                                 initial={{ y: -600, opacity: 0 }}
                                                 animate={{ y: -10, opacity: 1 }}
-                                                style={{ border: 'black solid 2px', margin: '1rem', padding: '1rem' }}
+                                                style={{ border: 'black solid 2px', margin: '1rem', padding: '1rem', borderRadius: '1rem' }}
                                             >
                                                 Element 1: {el.firstChild}
                                             </motion.p>
@@ -283,7 +283,7 @@ export default function Sort(props) {
                                                 key={`p-sort-${index}-id-6`}
                                                 initial={{ y: -600, opacity: 0 }}
                                                 animate={{ y: -10, opacity: 1 }}
-                                                style={{ border: 'black solid 2px', margin: '1rem', padding: '1rem' }}
+                                                style={{ border: 'black solid 2px', margin: '1rem', padding: '1rem', borderRadius: '1rem' }}
                                             >
                                                 Element 2: {el.secondChild}
                                             </motion.p>

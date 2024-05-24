@@ -117,7 +117,7 @@ export default function Home() {
         return colArrayLoaded && colObjLoaded && (
             colObj[i][0].map((el, index) => {
                 return (
-                    <Col name={`${id}`} id={`${id}-child-row-${index}`} style={{ border: "2px, solid, black", display: "flex", flexDirection: "row" }} size={`md-${el[0].length}`} key={`${id}-array-row-${index}`}>
+                    <Col name={`${id}`} id={`${id}-child-row-${index}`} style={{ border: "2px, solid, black", display: "flex", flexDirection: "row", borderRadius: '1rem' }} size={`md-${el[0].length}`} key={`${id}-array-row-${index}`}>
                         <Array
                             // Hash is a unique identifier for each element
                             hash={`${i}-${index}`}
