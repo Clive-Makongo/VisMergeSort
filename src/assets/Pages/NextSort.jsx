@@ -7,17 +7,6 @@ import Col from '../Components/Column';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Modal, Button } from 'react-bootstrap';
 
-const sort = (props) => {
-    const [isClicked, setClicked] = useState([]);
-    const { swapped, clicked, grandChildren } = props;
-    console.log(grandChildren, ` :sort`);
-
-    useEffect(() => {
-        setClicked(clicked);
-        console.log(clicked, ` :useEffect`);
-    }, [props]);
-};
-
 const NextSortPage = (props) => {
     const [grandChildren, setGrandChildren] = useState([]);
     const [paired, setPaired] = useState([]);
@@ -58,24 +47,64 @@ const NextSortPage = (props) => {
         console.log(`Paired Loaded: `, pairedLoaded);
     }, [paired, pairedLoaded]);
 
-
+    const sort = (index) => {
+        const element = paired[index];
+        console.log(`Element: `, element);
+        console.log(`Index: `, index);
+    };
 
     return (
         <>
-            <h1>Next Sort Page</h1>
-            <>{sort(props)}</>
+            <h4
+                style={{ marginTop: '1rem' }}
+            >
+                Click Element to Sort
+            </h4>
             <>
                 <div className='row d-flex flex-row'>
-                    <div className='col-md-12 d-flex flex-row'>
-                        {pairedLoaded &&
-                            <>
-                                {paired.map((el, index) => {
-                                    <>
-                                        
-                                    </>
-                                })}
-                            </>
-                        }
+                    <div className='col-md-12 d-flex flex-row align-items-center'>
+                        <Container>
+                            <Row>
+                                <Col size="md-12">
+                                    {pairedLoaded && paired.map((el, index) => {
+                                        return (
+                                            <button
+                                                onClick={() => { sort(index) }}
+                                                key={index}
+                                                style={{ border: '2px solid black', margin: '1rem', padding: "1rem" }}
+                                                className='d-flex flex-row col-md-4 align-items-center justify-content-center'>
+                                                <div
+                                                    style={{ backgroundColor: 'gray', borderRadius: '5px', padding: '0.5rem', margin: '0.5rem' }}
+                                                    className='mapped-pair d-flex flex-row align-items-center justify-content-center col-md-6'
+                                                    id={`pair-${index}-0`}
+
+                                                >
+                                                    <motion.p>
+                                                        {el[0][0]},
+                                                    </motion.p>
+                                                    <motion.p>
+                                                        {el[0][1]}
+                                                    </motion.p>
+
+                                                </div>
+                                                <div
+                                                    style={{ backgroundColor: 'gray', borderRadius: '5px', padding: '0.5rem', margin: '0.5rem' }}
+                                                    className='mapped-pair d-flex flex-row align-items-center justify-content-center col-md-6'
+                                                    id={`pair-${index}-1`}
+                                                >
+                                                    <motion.p>
+                                                        {el[1][0]},
+                                                    </motion.p>
+                                                    <motion.p>
+                                                        {el[1][1]}
+                                                    </motion.p>
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
+                                </Col>
+                            </Row>
+                        </Container>
                     </div>
                 </div>
             </>
