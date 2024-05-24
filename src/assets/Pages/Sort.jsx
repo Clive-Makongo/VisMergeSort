@@ -218,7 +218,7 @@ export default function Sort(props) {
 
 
     return (
-        <AnimatePresence>
+        <>
             <Row>
                 <h5>Click to Sort</h5>
                 {elementsLoaded && elementsHtml[0] !== '' && children ? (
@@ -227,14 +227,14 @@ export default function Sort(props) {
                             id={`col-sort-${index}-id-6`}
                             name='button-children'
                             size="md-2"
-                            key={index}>
+                            key={`elemHtml${index}`}>
                             <button
-                                
+                                key={`elemHtml${index}-button`}
                                 id={`button-sort-${index}-id-6`}
                                 style={{ backgroundColor: 'gray' }}
                                 onClick={() => handleClick(index)}>
                                 <div ref={el => (elementRef.current[index] = el)}>
-                                    <div dangerouslySetInnerHTML={{ __html: html }} />
+                                    <div key={`dangerousHTML${index}`} dangerouslySetInnerHTML={{ __html: html }} />
 
                                 </div>
                             </button>
@@ -251,7 +251,6 @@ export default function Sort(props) {
                         <h5>Sorted Elements</h5>
                         <div style={{ border: 'solid black 2px' }} className='row'>
                             {grandChildren.length > 0 && (
-
                                 grandChildren.map((el, index) => (
                                     <Col
                                         id={`col-sort-${index}-id-6`}
@@ -298,10 +297,12 @@ export default function Sort(props) {
                                 grandChildren.map((el, index) => (
                                     <motion.div
                                         style={{ padding: '1.5rem' }}
-                                        className='col-md-2 d-flex flex-row GAYYYY justify-content-center align-items-center'
+                                        className='col-md-2 d-flex flex-row  justify-content-center align-items-center'
+                                        variants={variants}
                                         initial={{ y: -600, opacity: 0 }}
                                         animate={{ y: -10, opacity: 1 }}
                                         transition={{ delay: index * 0.5 }}
+                                        key={`key-grandchildren-${index}`}
                                     >
                                         <Col key={`col-1-${index}`} size="md-6">
                                             {el.firstChild}
@@ -338,6 +339,6 @@ export default function Sort(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </AnimatePresence>
+        </>
     );
 }
