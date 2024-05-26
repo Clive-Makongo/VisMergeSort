@@ -8,6 +8,20 @@ import Col from '../Components/Column';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Modal, Button } from 'react-bootstrap';
 
+const variants = {
+    intialTop: {
+        y: 600, opacity: 0
+    }, intialBottom: {
+        y: -600, opacity: 0
+    }, animate: {
+        y: -10, opacity: 1,
+    }, swappedTop: {
+
+    }, swappedBotton: {
+
+    }
+}
+
 export default function Sort(props) {
     const [elementsHtml, setElementsHtml] = useState([]); // State to store the HTML content
     const [elementsLoaded, setElementsLoaded] = useState(false); // State to store Elements Loaded
@@ -22,12 +36,12 @@ export default function Sort(props) {
     const [modalContent, setModalContent] = useState(null);
     const [elementSwapped, setElementSwapped] = useState([]);
 
-    const variants = {
-        initial: { y: -300, opacity: 0 },
-        animate: { y: -10, opacity: 1 },
-        swapped: { y: 0, scale: 1.1, opacity: 1, backgroundColor: '#f0f', transition: { duration: 0.5 } }
+    // const variants = {
+    //     initial: { y: -300, opacity: 0 },
+    //     animate: { y: -10, opacity: 1 },
+    //     swapped: { y: 0, scale: 1.1, opacity: 1, backgroundColor: '#f0f', transition: { duration: 0.5 } }
 
-    }
+    // }
     useEffect(() => {
         //console.log(`Props Array: `, props.array);
         //console.log(elementsHtml[0], `: Elements HTML`)
@@ -249,8 +263,7 @@ export default function Sort(props) {
 
                 {grandChildrenLoaded && grandChildren.length > 0 &&
                     <>
-                    <h5>Sorted Elements</h5>
-                    <p>How Many Clicked: {Object.keys(clicked).length }</p>
+                        <p>How Many Clicked: {Object.keys(clicked).length}</p>
                         <div style={{ border: 'solid black 2px', borderRadius: "1rem" }} className='row'>
                             {grandChildren.length > 0 && (
                                 grandChildren.map((el, index) => (
@@ -264,29 +277,39 @@ export default function Sort(props) {
                                             style={{ padding: '1.5rem' }}
                                             className={`col-sort-${index}-id-6`}
                                             id={`div-sorting-${index}-id-6`}
-                                            initial={{ y: -300, opacity: 0 }}
-                                            animate={{ y: -10, opacity: 1 }}
-                                            transition={{ delay: index * 0.5 }}
+
                                             key={`key-${index}`}
                                         >
                                             <motion.p
                                                 layout
-                                                key={`key-1-${index}`}
-                                                initial={{ y: -600, opacity: 0 }}
-                                                animate={{ y: -10, opacity: 1 }}
+                                                key={`initial-0-${index}`}
+                                                initial={{ y: 600, opacity: 0 }}
+                                                animate={{ y: 0, opacity: 1 }}
+                                                variants={variants}
+                                                transition={{ delay: 0.65 * index }}
                                                 style={{ border: 'black solid 2px', margin: '1rem', padding: '1rem', borderRadius: '1rem' }}
                                             >
                                                 Element 1: {el.firstChild}
                                             </motion.p>
                                             <motion.p
                                                 layout
-                                                key={`p-sort-${index}-id-6`}
+                                                key={`initial-1-${index}`}
                                                 initial={{ y: -600, opacity: 0 }}
-                                                animate={{ y: -10, opacity: 1 }}
+                                                animate={{ y: 0, opacity: 1 }}
+                                                variants={variants}
+                                                transition={{ delay: 0.65 * index }}
                                                 style={{ border: 'black solid 2px', margin: '1rem', padding: '1rem', borderRadius: '1rem' }}
                                             >
                                                 Element 2: {el.secondChild}
                                             </motion.p>
+                                            {elementSwapped.forEach((element, index) => {
+                                                console.log(element, `Element`)
+                                                element.swapped === true &&
+                                                    <p>
+                                                        HELOOO
+                                                        {console.log(element.index)}
+                                                    </p>
+                                            })}
                                         </motion.div>
                                     </Col>
 
@@ -296,10 +319,10 @@ export default function Sort(props) {
 
                         <div style={{ display: 'flex', flex: 'row' }} className='row d-flex flex-row'>
                             {Object.keys(clicked).length === 6 && (
-                            <NextSort
-                                swapped={elementSwapped}
-                                clicked={clicked}
-                                grandChildren={grandChildren} />
+                                <NextSort
+                                    swapped={elementSwapped}
+                                    clicked={clicked}
+                                    grandChildren={grandChildren} />
                             )}
                         </div>
                     </>

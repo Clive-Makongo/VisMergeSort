@@ -51,6 +51,7 @@ const NextSortPage = (props) => {
         const element = paired[index];
         console.log(`Element: `, element);
         console.log(`Index: `, index);
+        console.log(`Element 0-0: ${element[0][0]}. Element 1-0: ${element[1][0]}`)
     };
 
     return (
@@ -77,7 +78,6 @@ const NextSortPage = (props) => {
                                                     style={{ backgroundColor: 'gray', borderRadius: '5px', padding: '0.5rem', margin: '0.5rem' }}
                                                     className='mapped-pair d-flex flex-row align-items-center justify-content-center col-md-6'
                                                     id={`pair-${index}-0`}
-
                                                 >
                                                     <motion.p>
                                                         {el[0][0]},
