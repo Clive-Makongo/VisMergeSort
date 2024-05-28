@@ -101,6 +101,7 @@ export default function Sort(props) {
         setChildren([]);
         setGrandChildren([]);
         setClicked({});
+        setElementSwapped([])
 
         createSortObj();
 
@@ -115,7 +116,7 @@ export default function Sort(props) {
 
     useEffect(() => {
         if (grandChildren.length > 0 && grandChildrenLoaded) {
-            console.log(`Grand Children UpdatedDDDDD: `, grandChildren);
+           // console.log(`Grand Children UpdatedDDDDD: `, grandChildren);
 
         }
     }, [grandChildren, grandChildrenLoaded]);
@@ -302,29 +303,20 @@ export default function Sort(props) {
                                             >
                                                 Element 2: {el.secondChild}
                                             </motion.p>
-                                            {elementSwapped.forEach((element, index) => {
-                                                console.log(element, `Element`)
-                                                element.swapped === true &&
-                                                    <p>
-                                                        HELOOO
-                                                        {console.log(element.index)}
-                                                    </p>
-                                            })}
                                         </motion.div>
                                     </Col>
-
                                 ))
                             )}
-                        </div>
-
-                        <div style={{ display: 'flex', flex: 'row' }} className='row d-flex flex-row'>
-                            {Object.keys(clicked).length === 6 && (
-                                <NextSort
-                                    swapped={elementSwapped}
-                                    clicked={clicked}
-                                    grandChildren={grandChildren} />
-                            )}
-                        </div>
+                    </div>
+                    
+                    <div style={{ display: 'flex', flex: 'row' }} className='row d-flex flex-row'>
+                        {Object.keys(clicked).length === 6 && (
+                            <NextSort
+                                swapped={elementSwapped}
+                                clicked={clicked}
+                                grandChildren={grandChildren} />
+                        )}
+                    </div>
                     </>
                 }
             </Row>
@@ -342,11 +334,8 @@ export default function Sort(props) {
                     )}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setModalShow(false)}>
-                        Close
-                    </Button>
                     <Button variant="primary" onClick={() => setModalShow(false)}>
-                        Save Changes
+                        Close
                     </Button>
                 </Modal.Footer>
             </Modal>
