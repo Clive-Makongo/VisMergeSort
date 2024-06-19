@@ -49,7 +49,7 @@ export default function Home() {
         setArraysLoaded(false);
         const newArray = [];
         for (let i = 0; i < 12; i++) {
-            newArray.push(Math.floor(Math.random() * 100));
+            newArray.push(Math.floor(Math.random() * 100)); 
         }
         setArray(newArray);
         setArraysLoaded(true);

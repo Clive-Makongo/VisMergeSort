@@ -34,7 +34,7 @@ export default function Array(props) {
     useEffect(() => {
         // Update the key whenever props.array changes to trigger re-render and animation
         setKey(prevKey => prevKey + 1)
-        //console.log(`key: ${key}`)
+        console.log(`key: ${key}`)
     }, [props.array]);
 
     const loadArray = () => {
@@ -45,6 +45,7 @@ export default function Array(props) {
                 return (
                     <Col name={`${props.hash}`} size={`md-${size}`} key={index} id={`size-${array.length}-${uniqueId}-${props.hash} ${props.id}-col-${index} ${uniqueId} `}>
                         <motion.div
+                            key={key}
                             className={`${props.id}-${size}`} id={`${uniqueId} ${props.id}-element-${index}`}
                             initial={{ y: -600, opacity: 0 }}
                             animate={{ y: -10, opacity: 1 }}
@@ -53,7 +54,7 @@ export default function Array(props) {
                             key={`${props.id}-col-${index}`}
                         >
                             <motion.h4
-                                key={`${props.id}-element-${index} ${key}`}>
+                                key={key}>
                                 {el}
                             </motion.h4>
                         </motion.div>
