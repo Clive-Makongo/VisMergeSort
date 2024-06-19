@@ -245,6 +245,7 @@ export default function Sort(props) {
                             size="md-2"
                             key={`elemHtml${index}`}>
                             <button
+                                className='button-sort'
                                 key={`elemHtml${index}-button`}
                                 id={`button-sort-${index}-id-6`}
                                 style={{ backgroundColor: 'gray' }}
