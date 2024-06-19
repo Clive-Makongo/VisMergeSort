@@ -258,7 +258,7 @@ export default function Sort(props) {
 
                     ))
                 ) : (
-                    <p>Loading... (Click Make New Array Again)</p>
+                    <p>Loading... (Click Make New Array Again )</p>
                 )}
 
 
