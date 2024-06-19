@@ -236,7 +236,7 @@ export default function Sort(props) {
     return (
         <>
             <Row>
-                <h5>Click all to Sort</h5>
+                <h5>Click all Below to Sort</h5>
                 {elementsLoaded && elementsHtml[0] !== '' && children ? (
                     elementsHtml.map((html, index) => (
                         <Col
@@ -258,7 +258,7 @@ export default function Sort(props) {
 
                     ))
                 ) : (
-                    <p>Loading...</p>
+                    <p>Loading... (Click Make New Array Again)</p>
                 )}
 
 
